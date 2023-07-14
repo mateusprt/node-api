@@ -9,3 +9,19 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique @db.VarChar(150)
+  password String @db.VarChar(255)
+  confirmationToken String? @db.VarChar(255) @map("confirmation_token")
+  confirmationTokenSentAt DateTime? @map("confirmation_token_sent_at")
+  confirmedAt DateTime? @map("confirmed_at")
+  resetPasswordToken String? @db.VarChar(255) @map("reset_password_token")
+  resetPasswordTokenSentAt DateTime? @map("reset_password_token_sent_at")
+  unconfirmed Boolean @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  @@map("users")
+}
